@@ -49,7 +49,7 @@ function updateUserLockState(user, done) {
   }
 
   user.lastPasswordFailure = now.toDate();
-  console.log(user, "user deta");
+  // console.log(user, "user deta");
   user.save(done);
 }
 
@@ -69,12 +69,12 @@ module.exports = {
             return reject(API_ERRORS.EMAIL_IN_USE);
           }
 
-          console.log(values, "value");
+          // console.log(values, "value");
 
           Auth.create(values).exec(async (createErr, user) => {
-            console.log(createErr, "create err");
+            // console.log(createErr, "create err");
             if (createErr) return reject(createErr);
-            console.log(user, "does exist");
+            // console.log(user, "does exist");
             const resp = await getUserDetails(email);
 
             UserManager._generateUserToken(resp, (token) => {
@@ -97,7 +97,7 @@ module.exports = {
    */
   _generateUserToken: function (user, done) {
     // Password hash helps to invalidate token when password is changed
-    console.log(user, "user hereee");
+    // console.log(user, "user hereee");
     const passwordHash = farmhash.hash32(user.encryptedPassword);
 
     const payload = {
@@ -150,7 +150,7 @@ module.exports = {
   validatePassword(email, password) {
     return new Promise((resolve, reject) => {
       Auth.findOne({ email: email }).exec((err, user) => {
-        console.log(user, "user here");
+        // console.log(user, "user here");
         if (err) return reject(err);
         if (!user) return reject(API_ERRORS.USER_NOT_FOUND);
         if (user.locked) return reject(API_ERRORS.USER_LOCKED);

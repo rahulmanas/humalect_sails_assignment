@@ -80,7 +80,7 @@ module.exports = {
   beforeCreate: function (values, next) {
     generatePasswordHash(values.password)
       .then((hash) => {
-        console.log(values, hash, "values and hash before create");
+        // console.log(values, hash, "values and hash before create");
         delete values.password;
         values.encryptedPassword = hash;
         next();

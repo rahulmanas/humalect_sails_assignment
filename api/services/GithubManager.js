@@ -1,7 +1,7 @@
 function doesAccessTokenExist(accessToken) {
   return new Promise((resolve, reject) => {
     Github.find({ user_id: accessToken }).exec((err, user) => {
-      console.log(err, user, "git hub find one");
+      // console.log(err, user, "git hub find one");
       if (err) return reject(err);
       return resolve(user);
     });
@@ -23,17 +23,17 @@ module.exports = {
     return new Promise((resolve, reject) => {
       doesAccessTokenExist(values.user_id)
         .then((exists) => {
-          console.log(exists, "exists xxx");
+          // console.log(exists, "exists xxx");
           if (exists && exists.length > 0) {
             return reject("Access Token Exist");
           }
 
-          console.log(values, "value");
+          // console.log(values, "value");
 
           Github.create(values).exec(async (createErr, user) => {
-            console.log(createErr, "create err");
+            // console.log(createErr, "create err");
             if (createErr) return reject(createErr);
-            console.log(user, "does exist");
+            // console.log(user, "does exist");
             const resp = await getAccessTokenDetails(values.access_token);
             resolve(resp);
           });
