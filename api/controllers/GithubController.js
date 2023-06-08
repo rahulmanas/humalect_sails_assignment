@@ -16,6 +16,21 @@ module.exports = {
       return res.json({ ...user });
     });
   },
+  async deleteToken(req, res) {
+    try {
+      const access_token = req.body.access_token;
+
+      Github.findOne({ access_token: access_token }).exec(async (err, user) => {
+        console.log(err, user, "git hub find one");
+        if (err) return res.badRequest(Utils.jsonErr(err));
+        await Github.destroy(user);
+        return res.ok("Access Token deleted successfully");
+      });
+    } catch (error) {
+      console.log(error, "err");
+      return res.badRequest(Utils.jsonErr("Unable to delete the access token"));
+    }
+  },
   async token(req, res) {
     const { code } = req.body;
     const clientId = "8e52c2375fd454b8c496";

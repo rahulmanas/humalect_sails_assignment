@@ -23,6 +23,7 @@ module.exports.routes = {
   "POST /signup": "AuthController.signup",
   "GET /api/github/token": "GithubController.fetchToken",
   "POST /api/github/token": "GithubController.token",
+  "DELETE /api/github/token": "GithubController.deleteToken"
 
   /***************************************************************************
    *                                                                          *
