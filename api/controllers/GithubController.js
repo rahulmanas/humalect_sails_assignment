@@ -4,10 +4,11 @@ const GithubManager = require("../services/GithubManager");
 
 module.exports = {
   async fetchToken(req, res) {
-    if (!req.headers.authorization) {
+    const headerAuthorization = req.headers.authorization.split(" ");
+    if (!headerAuthorization[1]) {
       return res.badRequest(Utils.jsonErr("Invalid Session!"));
     }
-    const token = req.headers.authorization.split(" ")[1];
+    const token = headerAuthorization[1];
     const userData = await authenticateUserByToken(token);
 
     Github.findOne({ user_id: userData.id }).exec((err, user) => {

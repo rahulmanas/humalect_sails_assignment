@@ -27,42 +27,6 @@ passSchema
   .digits();
 
 module.exports = {
-  //   login: function (req, res) {
-  //     // See `api/responses/login.js`
-  //     return res.login({
-  //       email: req.param("email"),
-  //       password: req.param("password"),
-  //       successRedirect: "/",
-  //       invalidRedirect: "/login",
-  //     });
-  //   },
-  //   signup: async (req, res) => {
-  //     let params = req.allParams();
-  //     const resp = await Auth.signup(params, function (err, user) {
-  //       if (err) return res.negotiate(err);
-  //       //   req.session.me = user.id;
-
-  //       // If this is not an HTML-wanting browser, e.g. AJAX/sockets/cURL/etc.,
-  //       // send a 200 response letting the user agent know the signup was successful.
-  //       if (req.wantsJSON) {
-  //         return res.ok("Signup successful!");
-  //       }
-
-  //       // Otherwise if this is an HTML-wanting browser, redirect to /welcome.
-  //       return res.redirect("/welcome");
-  //     });
-
-  //     console.log(resp, "auth response");
-
-  //     //   req.session.me = resp.id;
-
-  //     // If this is not an HTML-wanting browser, e.g. AJAX/sockets/cURL/etc.,
-  //     // send a 200 response letting the user agent know the signup was successful.
-  //     if (req.wantsJSON) {
-  //       return res.ok("Signup successful!");
-  //     }
-  //   },
-
   /**
    * Action for /signup
    * @param req
@@ -101,7 +65,7 @@ module.exports = {
       organization,
     })
       .then((jwToken) => {
-        res.created({
+        res.ok({
           token: jwToken,
         });
       })
