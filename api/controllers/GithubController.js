@@ -11,24 +11,23 @@ module.exports = {
     const token = headerAuthorization[1];
     const userData = await authenticateUserByToken(token);
 
-    Github.findOne({ user_id: userData.id }).exec((err, user) => {
-      // console.log(err, user, "git hub find one");
-      if (err) return res.badRequest(Utils.jsonErr(err));
-      return res.json({ ...user });
-    });
+    try {
+      const payload = { user_id: userData.id };
+      const resp = await GithubManager.fetchGithubToken(payload);
+      res.json({ ...resp });
+    } catch (error) {
+      console.log(error, "err");
+      return res.badRequest(Utils.jsonErr("Unable to fetch access token"));
+    }
   },
   async deleteToken(req, res) {
     try {
       const access_token = req.body.access_token;
-
-      Github.findOne({ access_token: access_token }).exec(async (err, user) => {
-        // console.log(err, user, "git hub find one");
-        if (err) return res.badRequest(Utils.jsonErr(err));
-        await Github.destroy(user);
-        return res.ok("Access Token deleted successfully");
-      });
+      let payload = { access_token: access_token };
+      const resp = await GithubManager.deleteGithubToken(payload);
+      res.ok(resp);
     } catch (error) {
-      // console.log(error, "err");
+      console.log(error, "err");
       return res.badRequest(Utils.jsonErr("Unable to delete the access token"));
     }
   },

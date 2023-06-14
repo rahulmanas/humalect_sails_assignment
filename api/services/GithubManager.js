@@ -41,4 +41,23 @@ module.exports = {
         .catch(reject);
     });
   },
+  deleteGithubToken: function (values) {
+    return new Promise((resolve, reject) => {
+      Github.findOne(values).exec(async (err, user) => {
+        // console.log(err, user, "git hub find one");
+        if (err) return reject(Utils.jsonErr(err));
+        await Github.destroy(user);
+        return resolve("Access Token deleted successfully");
+      });
+    });
+  },
+  fetchGithubToken: function (values) {
+    return new Promise((resolve, reject) => {
+      Github.findOne(values).exec((err, user) => {
+        // console.log(err, user, "git hub find one");
+        if (err) return reject(Utils.jsonErr(err));
+        return resolve(user);
+      });
+    });
+  },
 };
