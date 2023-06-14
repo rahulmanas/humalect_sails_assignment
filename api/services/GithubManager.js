@@ -1,6 +1,6 @@
-function doesAccessTokenExist(accessToken) {
+function doesAccessTokenExist(userId) {
   return new Promise((resolve, reject) => {
-    Github.find({ user_id: accessToken }).exec((err, user) => {
+    Github.find({ user_id: userId }).exec((err, user) => {
       // console.log(err, user, "git hub find one");
       if (err) return reject(err);
       return resolve(user);
@@ -41,6 +41,15 @@ module.exports = {
         .catch(reject);
     });
   },
+  getAccessToken: function (values) {
+    return new Promise((resolve, reject) => {
+      Github.find({ user_id: values }).exec((err, user) => {
+        // console.log(err, user, "git hub find one");
+        if (err) return reject(err);
+        return resolve(user);
+      });
+    });
+  },
   deleteGithubToken: function (values) {
     return new Promise((resolve, reject) => {
       Github.findOne(values).exec(async (err, user) => {
@@ -54,8 +63,8 @@ module.exports = {
   fetchGithubToken: function (values) {
     return new Promise((resolve, reject) => {
       Github.findOne(values).exec((err, user) => {
-        // console.log(err, user, "git hub find one");
-        if (err) return reject(Utils.jsonErr(err));
+        console.log(err, user, "git hub find one");
+        if (err) return reject(Utils.jsonErr("Couldn't find token"));
         return resolve(user);
       });
     });

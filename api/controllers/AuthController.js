@@ -116,4 +116,19 @@ module.exports = {
         }
       });
   },
+  async getUserDetails(req, res) {
+    const headerAuthorization = req.headers.authorization.split(" ");
+    const token = headerAuthorization[1];
+
+    try {
+      const resp = await UserManager.authenticateUserByToken(token);
+
+      if (resp) {
+        delete resp.encryptedPassword;
+        res.json({ ...resp });
+      }
+    } catch (error) {
+      return res.badRequest(Utils.jsonErr("Unable to fetch user details"));
+    }
+  },
 };

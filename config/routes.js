@@ -21,9 +21,15 @@ module.exports.routes = {
   "GET /": { view: "pages/homepage" },
   "post /login": "AuthController.login",
   "POST /signup": "AuthController.signup",
+  "GET /api/users": "AuthController.getUserDetails",
   "GET /api/github/token": "GithubController.fetchToken",
+  "GET /api/github/user": "GithubController.getGithubUser",
+  "GET /api/github/repos": "GithubController.getGithubRepos",
+  "POST /api/github/contributor-data": "GithubController.postContributorData",
+  "POST /api/github/repos/commits":
+    "GithubController.getGithubRepoCommitDetails",
   "POST /api/github/token": "GithubController.token",
-  "DELETE /api/github/token": "GithubController.deleteToken"
+  "DELETE /api/github/token": "GithubController.deleteToken",
 
   /***************************************************************************
    *                                                                          *
